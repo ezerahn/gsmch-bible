@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>말씀함께주간 2026 · 운영(안)</title>
+<style>
+:root{
+  --g:#07913B; --g-d:#045C26; --g-dd:#023618; --g-l:#F1F8F3; --g-ll:#F8FCF9;
+  --g-b:#D6E8DB; --g-b2:#B5D6C0;
+  --ink:#1b2620; --ink2:#4a5a51; --ink3:#7d8b83;
+  --red:#C62828; --red-l:#FDF4F3; --red-b:#E9B8B2;
+  --amb:#B26A00; --amb-l:#FDF8EF; --amb-b:#E8D2A8;
+  --line:#E3EAE5; --white:#fff;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0; background:#F4F7F5; color:var(--ink);
+  font-family:"Noto Sans KR","Malgun Gothic","Apple SD Gothic Neo",sans-serif;
+  font-size:15px; line-height:1.62; -webkit-text-size-adjust:100%;
+  word-break:keep-all; overflow-wrap:break-word;
+}
+.wrap{max-width:1080px; margin:0 auto; padding:0 18px 60px;}
+header.hd .wrap, .proc .wrap{padding-bottom:0;}
+a{color:inherit;}
+
+/* ── 상단바 ── */
+.topbar{background:var(--g-dd); color:#cde8d6; font-size:12.5px;}
+.topbar .wrap{display:flex; justify-content:space-between; padding:8px 18px; flex-wrap:wrap; gap:6px;}
+.topbar b{color:#fff;}
+
+/* ── 헤더 ── */
+header.hd{background:var(--g); color:#fff; padding:26px 0 22px;}
+header.hd .eyebrow{font-size:12.5px; letter-spacing:2px; opacity:.85; margin-bottom:6px;}
+header.hd h1{margin:0; font-size:30px; letter-spacing:-1px; font-weight:800;}
+header.hd h1 span{font-weight:400; opacity:.9;}
+header.hd .sub{font-size:14px; opacity:.92;}
+
+/* ── 진행 공정 (선 · 노드형) ── */
+.proc{background:#F4F7F5; border-bottom:1px solid var(--line); padding:16px 0;}
+.procbox{background:#fff; border:1px solid var(--line); border-radius:8px;
+  padding:16px 20px 14px; box-shadow:0 1px 3px rgba(0,0,0,.03);}
+.proc .phead{display:flex; justify-content:space-between; align-items:baseline;
+  flex-wrap:wrap; gap:6px; margin-bottom:14px;}
+.proc .phead .ttl{font-size:16px; font-weight:800; color:#1b2620; letter-spacing:-.5px;}
+.proc .phead .ttl em{font-style:normal; font-weight:400; font-size:13px; color:var(--ink3); margin-left:8px;}
+.proc .phead .today{font-size:13px; color:var(--g-d); font-weight:700;}
+
+.track{display:flex; position:relative;}
+.node{flex:1; text-align:center; position:relative; min-width:0;}
+.node .no{font-size:12.5px; color:var(--ink3);}
+.node .nm{font-size:14.5px; font-weight:800; color:#1b2620; letter-spacing:-.4px; height:19px; line-height:19px; overflow:hidden;}
+.node .st{font-size:12.5px; color:var(--ink3); margin:3px 0 7px;
+  height:20px; line-height:20px;}
+.node .dt{font-size:12.5px; color:var(--ink3); margin-top:7px;}
+
+/* 연결선 */
+.node .rail{position:relative; height:2px; background:var(--line);}
+.node:first-child .rail{margin-left:50%;}
+.node:last-child .rail{margin-right:50%;}
+.node.done .rail, .node.now .rail{background:var(--g-d);}
+.node.now ~ .node .rail{background:var(--line);}
+.node .dot{
+  position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+  width:13px; height:13px; border-radius:50%; background:#fff;
+  border:2.5px solid var(--line); box-sizing:border-box;
+}
+.node.done .dot{background:var(--g-d); border-color:var(--g-d);
+  box-shadow:inset 0 0 0 2.5px #fff;}
+.node.now .dot{width:17px; height:17px; border-color:var(--g); background:#fff;
+  box-shadow:0 0 0 4px rgba(7,145,59,.14);}
+
+/* 현재 단계 강조 */
+.node.now .no, .node.now .nm{color:var(--g);}
+.node.now .st{
+  display:inline-block; background:var(--g); color:#fff; font-weight:700;
+  padding:0 10px; border-radius:10px; font-size:12px;
+  height:20px; line-height:20px;
+}
+.node.done .nm{color:#3f4f46;}
+
+.proc .keys{margin-top:14px; padding-top:11px; border-top:1px solid var(--line);
+  display:table; width:100%; font-size:13.5px; color:var(--ink2);}
+.proc .keys b{color:#1b2620;}
+.proc .keys .events{display:table-cell; vertical-align:middle;}
+.proc .keys .events span{display:inline-block; margin:0 24px 4px 0;}
+.proc .keys .nextmt{
+  display:table-cell; vertical-align:middle; text-align:right;
+  white-space:nowrap; padding-left:14px; width:1%;
+}
+.proc .keys .nextmt{
+  color:var(--g-d);
+}
+.proc .keys .nextmt b{
+  display:inline-block; background:var(--g-l); border:1px solid var(--g-b2);
+  color:var(--g-d); padding:3px 11px; border-radius:13px; margin-left:5px;
+}
+
+/* ── 탭 ── */
+nav.tabs{background:#fff; border-bottom:1px solid var(--line); position:sticky; top:0; z-index:20;
+  box-shadow:0 1px 6px rgba(0,0,0,.05);}
+nav.tabs .wrap{display:flex; gap:2px; overflow-x:auto; padding:0 18px;}
+nav.tabs button{
+  border:0; background:none; padding:13px 15px; font-size:14.5px; font-weight:600;
+  color:var(--ink3); cursor:pointer; white-space:nowrap; border-bottom:3px solid transparent;
+  font-family:inherit;
+}
+nav.tabs button .n{color:var(--g-b2); margin-right:5px; font-weight:800;}
+nav.tabs button.on{color:var(--g-d); border-bottom-color:var(--g);}
+nav.tabs button.on .n{color:var(--g);}
+
+/* ── 패널 ── */
+.panel{display:none; padding-top:22px;}
+.panel.on{display:block;}
+
+/* ── 강조 배너 ── */
+.keynote{
+  display:flex; align-items:stretch; gap:0; margin-bottom:16px;
+  background:#FCF0E8; border:1px solid #F2D6C6; border-radius:7px; overflow:hidden;
+  box-shadow:0 1px 4px rgba(232,102,58,.08);
+}
+.keynote .kn-tag{
+  background:#E8663A; color:#fff; font-size:13px; font-weight:800;
+  padding:14px 12px; writing-mode:vertical-rl; text-orientation:upright;
+  letter-spacing:2px; white-space:nowrap; display:flex; align-items:center;
+  justify-content:center; flex:0 0 auto;
+}
+.keynote .kn-body{padding:15px 20px; max-width:860px;}
+.keynote .kn-ttl{
+  font-size:17.5px; font-weight:800; color:#33261F;
+  letter-spacing:-.7px; margin-bottom:5px;
+}
+.keynote p{margin:0 0 7px; font-size:14.5px; color:#5C4C43; line-height:1.7;}
+.keynote p:last-child{margin-bottom:0;}
+.keynote .kn-list{margin:0; padding:0; list-style:none;}
+.keynote .kn-list li{
+  position:relative; padding-left:15px; margin-bottom:6px;
+  font-size:14.5px; color:#5C4C43; line-height:1.65;
+}
+.keynote .kn-list li:last-child{margin-bottom:0;}
+.keynote .kn-list li::before{
+  content:""; position:absolute; left:0; top:9px;
+  width:5px; height:5px; border-radius:50%; background:#E8663A;
+}
+.keynote .kn-list b{color:#33261F;}
+.keynote p b{color:#33261F;}
+
+/* ── 핵심 일자 칸 ── */
+.keydate{
+  border:1.5px solid var(--g-b2); background:var(--g-ll);
+  border-radius:6px; padding:14px 18px;
+}
+.keydate .kd-lbl{font-size:13.5px; color:var(--ink3); letter-spacing:.5px; margin-bottom:2px;}
+.keydate .kd-val{font-size:26px; font-weight:800; color:var(--g-dd); letter-spacing:-1px;}
+.keydate .kd-st{
+  font-size:12px; font-weight:700; vertical-align:6px; margin-left:6px;
+  background:var(--amb-l); color:var(--amb); border:1px solid var(--amb-b);
+  padding:1px 9px; border-radius:11px; letter-spacing:0;
+}
+.keydate .kd-memo{
+  margin-top:8px; padding-top:8px; border-top:1px solid var(--g-b);
+  font-size:14px; color:var(--ink2); line-height:1.6;
+}
+.keydate .kd-memo b{color:var(--g-dd);}
+
+/* ── 접이식 참고자료 ── */
+.fold{border:1px solid var(--line); border-radius:5px; margin-bottom:8px; background:#fff;}
+.fold summary{
+  cursor:pointer; padding:10px 14px; font-size:14.5px; font-weight:700;
+  color:var(--g-dd); list-style:none; user-select:none;
+}
+.fold summary::-webkit-details-marker{display:none;}
+.fold summary::before{
+  content:"▸"; color:var(--g); margin-right:7px; font-size:12px;
+  display:inline-block; transition:transform .15s;
+}
+.fold[open] summary::before{content:"▾";}
+.fold[open] summary{border-bottom:1px solid var(--line); background:var(--g-ll);}
+.fold summary .fs{
+  float:right; font-weight:600; font-size:13px; color:var(--ink3);
+}
+.fold-body{padding:12px 14px;}
+.fold-body table td:last-child, .fold-body table th:last-child{text-align:right;}
+.fold-body tr.sub td{background:#F4FAF6;}
+.fold-body .acct{
+  display:inline-block; font-size:11.5px; font-weight:700; color:var(--g-d);
+  background:var(--g-l); border:1px solid var(--g-b2);
+  padding:0 7px; border-radius:9px; margin-left:5px;
+}
+
+/* ── 카드/섹션 ── */
+.card{background:#fff; border:1px solid var(--line); border-radius:6px; margin-bottom:16px;}
+.card > h2{border-radius:5px 5px 0 0;}
+.card > h2{
+  margin:0; font-size:15.5px; padding:11px 16px; background:var(--g-l);
+  color:var(--g-dd); border-bottom:1px solid var(--g-b); letter-spacing:-.4px;
+}
+.card > h2 .tag{
+  float:right; font-size:11.5px; font-weight:600; background:var(--g); color:#fff;
+  padding:1px 8px; border-radius:10px; margin-top:2px;
+}
+.card .body{padding:14px 16px;}
+h3{font-size:14px; margin:16px 0 7px; color:var(--g-d); letter-spacing:-.3px;}
+h3:first-child{margin-top:0;}
+
+/* ── 타임라인 ── */
+.tl{border-left:2px solid var(--g-b2); margin-left:5px; padding-left:16px;}
+.tl .ev{position:relative; margin-bottom:14px;}
+.tl .ev:last-child{margin-bottom:0;}
+.tl .ev::before{content:""; position:absolute; left:-22px; top:5px; width:11px; height:11px;
+  border-radius:50%; background:var(--g); border:2.5px solid #fff; box-shadow:0 0 0 1.5px var(--g-b2);}
+.tl .ev.key::before{background:var(--red); box-shadow:0 0 0 1.5px #eebbb5;}
+.tl .d{font-weight:800; color:var(--g-dd); font-size:15.5px; letter-spacing:-.4px;}
+.tl .ev.key .d{color:var(--red);}
+.tl .t{color:var(--ink2); font-size:14px;}
+
+/* ── 표 ── */
+table{width:100%; border-collapse:collapse; font-size:14px;}
+th,td{border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top;}
+th{background:var(--g-l); color:var(--g-dd); font-weight:700; font-size:13.5px;}
+tr.off td{color:var(--ink3); background:#FAFBFA;}
+
+/* ── 표 스크롤 컨테이너 ── */
+.tw{
+  display:block; width:100%; max-width:100%;
+  overflow-x:auto; overflow-y:hidden;
+  -webkit-overflow-scrolling:touch; touch-action:pan-x pan-y;
+}
+.tw table{min-width:600px;}
+.tw .orgtbl{min-width:0;}
+.tw .ptbl{min-width:660px;}
+.tw .flowtbl{min-width:640px;}
+.tw .cmptbl{min-width:700px;}
+.tw .usetbl{min-width:420px;}
+.tw .bdgtbl{min-width:560px;}
+.tw .mtgtbl{min-width:560px;}
+.tw .agdtbl{min-width:560px;}
+.tw .doctbl{min-width:560px;}
+.mbr{display:none;}
+.orgtbl .rmk .chip.wait{margin-right:5px;}
+.swipe{display:none;}
+
+/* ── 조직 표 ── */
+.orgtbl{table-layout:fixed;}
+.orgtbl .grp{width:13%; background:#FAFCFB; font-weight:700; color:var(--g-d);
+  vertical-align:middle;}
+.orgtbl th.grp{background:var(--g-l); color:var(--g-dd);}
+.orgtbl .pos{width:20%; white-space:nowrap;}
+.orgtbl .nm2{width:18%; white-space:nowrap;}
+.orgtbl tr.off .grp{color:var(--g-d); background:#FAFCFB;}
+
+/* ── 기도 일정 표 ── */
+.ptbl td.wk{background:#FAFCFB; font-weight:700; color:var(--g-d);
+  text-align:center; vertical-align:middle;}
+.ptbl tr.hl td, .ptbl td.hlx{color:var(--red); font-weight:700; background:var(--red-l);}
+.ptbl tr.hl td.wk{color:var(--g-d); font-weight:700; background:#FAFCFB;}
+
+/* ── 상태 칩 ── */
+.chip{display:inline-block; font-size:12px; font-weight:700; padding:1px 8px; border-radius:10px;
+  border:1px solid; white-space:nowrap;}
+.chip.ok{color:var(--g-d); background:var(--g-l); border-color:var(--g-b2);}
+.chip.ing{color:var(--amb); background:var(--amb-l); border-color:var(--amb-b);}
+.chip.need{color:var(--red); background:var(--red-l); border-color:var(--red-b);}
+.chip.wait{color:var(--ink3); background:#F4F6F5; border-color:#DDE3DF;}
+
+/* ── 목록 ── */
+ul.li{margin:0; padding-left:18px;} ul.li li{margin-bottom:4px;}
+.lbl{font-weight:700; color:var(--g-dd);}
+.need-t{color:var(--red); font-weight:700;}
+
+/* ── 박스 ── */
+.box{border:1px solid var(--g-b); background:var(--g-ll); border-radius:5px; padding:11px 14px; font-size:14px;}
+.box.warn{border:1.5px solid var(--red-b); background:var(--red-l);}
+.box.warn .lbl{color:var(--red);}
+.note{font-size:13px; color:var(--ink3); margin-top:6px;}
+
+/* ── 빈칸(채울 자리) ── */
+.fill{
+  border:1.5px dashed var(--g-b2); background:repeating-linear-gradient(45deg,#fff,#fff 8px,var(--g-ll) 8px,var(--g-ll) 16px);
+  border-radius:5px; padding:14px 16px; color:var(--ink3); font-size:13.5px; text-align:center;
+}
+.fill b{display:block; color:var(--g-d); font-size:14.5px; margin-bottom:3px;}
+
+/* ── 그리드 ── */
+.grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:12px;}
+.mini{border:1px solid var(--line); border-radius:5px; padding:11px 13px; background:#fff;}
+.mini .hdln{font-weight:800; color:var(--g-dd); font-size:14.5px; margin-bottom:2px; letter-spacing:-.3px;}
+.mini .who{font-size:12.5px; color:var(--ink3); margin-bottom:6px;}
+.mini ul{margin:0; padding-left:16px; font-size:13.5px;}
+.mini ul li{margin-bottom:3px;}
+
+/* ── 체크 목록 ── */
+ul.chk{list-style:none; padding-left:0; margin:0;}
+ul.chk li{padding-left:20px; position:relative; margin-bottom:6px; font-size:14px;}
+ul.chk li::before{content:"□"; position:absolute; left:0; top:0; color:var(--red); font-weight:800;}
+
+/* ── 푸터 ── */
+footer{margin-top:26px; padding:16px 0; border-top:1px solid var(--line);
+  font-size:12.5px; color:var(--ink3); text-align:center;}
+
+/* ── 인쇄 ── */
+@media print{
+  body{background:#fff; font-size:10pt;}
+  nav.tabs,.topbar{display:none;}
+  .panel{display:block !important; page-break-before:always;}
+  .panel:first-of-type{page-break-before:auto;}
+  .card{break-inside:avoid;}
+}
+@media(max-width:680px){
+  header.hd h1{font-size:23px;}
+  .wrap{padding:0 12px 40px;}
+
+  /* 진행 공정 — 세로 배열 */
+  .proc{padding:12px 0;}
+  .procbox{padding:14px 15px 12px;}
+  .proc .phead{margin-bottom:12px;}
+  .proc .phead .ttl{font-size:15px;}
+  .proc .phead .ttl em{display:block; margin:2px 0 0; font-size:12.5px;}
+
+  .track{display:block;}
+  .node{display:block; text-align:left; position:relative;
+    padding:0 0 13px 26px; min-width:0;}
+  .node:last-child{padding-bottom:0;}
+  .node .no{display:inline; font-size:12.5px;}
+  .node .nm{display:inline; height:auto; line-height:1.4; overflow:visible; font-size:15px;}
+  .node .st{display:inline-block; height:18px; line-height:18px; margin:0 0 0 7px;
+    vertical-align:2px;}
+  .node.now .st{height:18px; line-height:18px; padding:0 9px;}
+  .node .dt{display:block; margin:1px 0 0; font-size:12.5px;}
+
+  .node .rail{position:absolute; left:6px; top:3px; bottom:-3px;
+    width:2px; height:auto; margin:0 !important;}
+  .node:last-child .rail{background:transparent;}
+  .node .dot{left:-5px; top:2px; transform:none; width:12px; height:12px;}
+  .node.now .dot{width:14px; height:14px; left:-6px; top:1px;}
+
+  /* 주요 날짜 — 세로 */
+  .proc .keys{display:block; margin-top:12px; padding-top:10px;}
+  .proc .keys .nextmt{
+    display:block; text-align:left; width:auto; white-space:normal;
+    margin-top:7px; padding:6px 9px; font-size:13px;
+    border:1px solid var(--g-b2); background:var(--g-l);
+    border-radius:5px; color:var(--g-d);
+  }
+  .proc .keys .nextmt b{
+    background:none; border:0; padding:0; margin-left:5px;
+    color:var(--g-d); border-radius:0;
+  }
+  .proc .keys .events{display:block; font-size:13px;}
+  .proc .keys .events span{
+    display:block; margin:0 0 5px; padding:5px 9px;
+    border:1px solid var(--line); border-radius:5px; background:#FAFCFB;
+  }
+  .proc .keys .events span:last-child{margin-bottom:0;}
+
+  /* 강조 배너 */
+  .keynote{display:block;}
+  .keynote .kn-tag{
+    writing-mode:horizontal-tb; text-orientation:mixed;
+    padding:5px 12px; letter-spacing:1px; font-size:12px; display:block;
+  }
+  .keynote .kn-body{padding:12px 14px;}
+  .keynote .kn-ttl{font-size:16px;}
+  .keynote p{font-size:13.5px;}
+
+  /* 표 — 좁은 화면에서 가로 스크롤, 열 뭉개짐 방지 */
+  .tw{
+    position:relative; margin-bottom:2px;
+    border-right:2px solid var(--g-b2); border-radius:0 4px 4px 0;
+    background:
+      linear-gradient(to right, #fff 30%, rgba(255,255,255,0)),
+      linear-gradient(to right, rgba(255,255,255,0), #fff 70%) 100% 0,
+      radial-gradient(farthest-side at 0 50%, rgba(0,0,0,.10), transparent),
+      radial-gradient(farthest-side at 100% 50%, rgba(0,0,0,.10), transparent) 100% 0;
+    background-repeat:no-repeat;
+    background-size:36px 100%, 36px 100%, 12px 100%, 12px 100%;
+    background-attachment:local, local, scroll, scroll;
+  }
+  .swipe{
+    display:block; font-size:11.5px; color:var(--ink3);
+    margin:5px 0 0; text-align:right;
+  }
+
+  /* 표 — 좁은 화면에서는 항목별로 쌓아서 표시 */
+  .tw{overflow:visible; border:0; background:none;}
+  .swipe{display:none;}
+
+  .stk, .stk tbody, .stk tr, .stk td{display:block; width:auto; min-width:0;}
+  .stk{min-width:0 !important;}
+  .stk tr:first-child{display:none;}
+  .stk tr{
+    border:1px solid var(--line); border-radius:5px;
+    margin-bottom:8px; padding:9px 11px; background:#fff;
+  }
+  .stk tr:last-child{margin-bottom:0;}
+  .stk td{position:relative; display:block; border:0;
+    padding:2px 0 2px 62px; font-size:13.5px; line-height:1.55;}
+  .stk td::before{
+    content:attr(data-l); position:absolute; left:0; top:2px; width:56px;
+    font-size:12px; font-weight:700; color:var(--ink3);
+  }
+  .stk td[data-l=""]::before{display:none;}
+  .stk td .chip{vertical-align:top;}
+
+  /* 첫 칸은 제목처럼 */
+  .stk td:first-child{
+    display:block; padding:0 0 5px; margin-bottom:5px;
+    font-weight:800; color:var(--g-dd); font-size:15px;
+    border-bottom:1px solid var(--line);
+  }
+  .stk td:first-child::before{display:none;}
+
+  /* 기도 일정 — 주간 묶음 칸은 상단 배지로 */
+  .ptbl.stk td.wk{
+    background:var(--g-l); color:var(--g-d); border:1px solid var(--g-b2);
+    border-radius:9px; display:inline-block; padding:1px 10px;
+    font-size:12px; margin-bottom:6px; text-align:left;
+    border-bottom:1px solid var(--g-b2);
+  }
+  .ptbl.stk td.wk + td{
+    display:block; padding:0 0 5px; margin-bottom:5px;
+    font-weight:800; color:var(--g-dd); font-size:15px;
+    border-bottom:1px solid var(--line);
+  }
+  .ptbl.stk td.wk + td::before{display:none;}
+  .ptbl.stk tr.hl td, .ptbl.stk td.hlx{background:none; color:var(--red);}
+  .ptbl.stk tr.hl{border-color:var(--red-b); background:var(--red-l);}
+  .ptbl.stk tr.hl td:first-child{border-bottom-color:var(--red-b);}
+
+  .cmptbl.stk td:first-child{
+    display:inline-block; padding:1px 10px; margin-bottom:6px;
+    border:1px solid var(--g-b2); background:var(--g-l); border-radius:9px;
+    font-size:12px; font-weight:700; color:var(--g-d);
+  }
+  .cmptbl.stk td:first-child + td{
+    display:block; padding:0 0 5px; margin-bottom:5px;
+    font-weight:800; color:var(--g-dd); font-size:15px;
+    border-bottom:1px solid var(--line);
+  }
+  .cmptbl.stk td:first-child + td::before{display:none;}
+
+  /* 접이식 표 — 스택 시 좌측 정렬 */
+  .fold-body .stk td{text-align:left !important;}
+  .fold-body .stk td[style*="text-align:right"]{text-align:left !important;}
+
+  /* 사용 내역은 2열이라 표 유지 */
+  .tw .usetbl{min-width:0;}
+  .usetbl td, .usetbl th{font-size:12.5px; padding:5px 6px;}
+
+  /* 조직 표 — 직책 · 성명 한 줄 유지 */
+  .orgtbl{font-size:12px;}
+  .orgtbl th, .orgtbl td{padding:5px 4px;}
+  .orgtbl .grp{width:17%; font-size:10.5px; padding:5px 1px;
+    text-align:center; letter-spacing:-.8px; white-space:nowrap;}
+  .orgtbl .pos{width:26%; font-size:11.5px; letter-spacing:-.7px;}
+  .orgtbl .nm2{width:24%; font-size:11.5px; letter-spacing:-.7px;}
+  .orgtbl .rmk{font-size:11.5px; line-height:1.4; letter-spacing:-.3px;}
+  .orgtbl .rmk .chip{font-size:10.5px; padding:0 5px;}
+  .mbr{display:block;}
+  .orgtbl .rmk .chip.wait{margin:0 0 2px;}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="wrap">
+  <span>멀티미디어위원회 › <b>말씀함께 절기팀</b> › 운영(안)</span>
+  <span>업데이트 <b>2026. 9. 1.</b> · 정리 기획분과 안상미</span>
+</div></div>
+
+<header class="hd"><div class="wrap">
+  <div class="eyebrow">기독교대한감리회 선한목자교회</div>
+  <h1>「말씀함께주간 2026」 <span>운영(안)</span></h1>
+</div></header>
+
+<div class="proc"><div class="wrap"><div class="procbox">
+  <div class="phead">
+    <div class="ttl">진행 공정 <em>5단계 · 현재 ② 분과 계획 수립</em></div>
+    <div class="today">오늘 2026. 9. 1.</div>
+  </div>
+  <div class="track">
+    <div class="node done">
+      <div class="no">①</div><div class="nm">팀 구성</div><div class="st">완료</div>
+      <div class="rail"><span class="dot"></span></div>
+      <div class="dt">8월</div>
+    </div>
+    <div class="node now">
+      <div class="no">②</div><div class="nm">분과 계획 수립</div><div class="st">진행 중</div>
+      <div class="rail"><span class="dot"></span></div>
+      <div class="dt">9/5 ~ 9월</div>
+    </div>
+    <div class="node">
+      <div class="no">③</div><div class="nm">제작 · 홍보 실행</div><div class="st">예정</div>
+      <div class="rail"><span class="dot"></span></div>
+      <div class="dt">10월 초</div>
+    </div>
+    <div class="node">
+      <div class="no">④</div><div class="nm">본행사</div><div class="st">예정</div>
+      <div class="rail"><span class="dot"></span></div>
+      <div class="dt">10/16~24</div>
+    </div>
+    <div class="node">
+      <div class="no">⑤</div><div class="nm">마무리 · 보고</div><div class="st">예정</div>
+      <div class="rail"><span class="dot"></span></div>
+      <div class="dt">10월 말</div>
+    </div>
+  </div>
+  <div class="keys">
+    <div class="events">
+      <span>앱 출시 <b>9월 말 (예정)</b></span>
+      <span>금요성령집회 <b>10월 16일 (금)</b></span>
+      <span>컨퍼런스 <b>10월 17일 (토) 15:00</b></span>
+      <span>특별주일 <b>10월 18일 (주일)</b></span>
+      <span>묵상주간 <b>10월 19일 ~ 24일</b></span>
+    </div>
+    <div class="nextmt">차기 회의 <b>9월 5일 (토) 오전 8시</b></div>
+  </div>
+</div></div></div>
+
+<nav class="tabs"><div class="wrap">
+  <button class="on" data-t="t1"><span class="n">1</span>개요</button>
+  <button data-t="t2"><span class="n">2</span>조직 · 분과</button>
+  <button data-t="t3"><span class="n">3</span>준비 일정</button>
+  <button data-t="t4"><span class="n">4</span>앱 출시 · 정책</button>
+  <button data-t="t5"><span class="n">5</span>예산</button>
+  <button data-t="t6"><span class="n">6</span>캠페인</button>
+  <button data-t="t7"><span class="n">7</span>회의 자료</button>
+</div></nav>
+
+<div class="wrap">
+
+<!-- ══════ 1 개요 ══════ -->
+<section class="panel on" id="t1">
+
+  <div class="card">
+    <h2>본행사 일정 <span class="tag">확정</span></h2>
+    <div class="body"><div class="tl">
+      <div class="ev">
+        <div class="d">10/16(금) · 금요성령집회</div>
+        <div class="t">신촌감리교회 임재훈 목사 외부 강사 초청 · 말씀묵상 공동체 사례 나눔</div>
+      </div>
+      <div class="ev key">
+        <div class="d">10/17(토) 15:00 · 「말씀함께 컨퍼런스」</div>
+        <div class="t">6층 글로리홀 · 약 1~1.5시간 · <b>앱 사용법 및 필요성 중심</b> · 전체 리더십 필참</div>
+      </div>
+      <div class="ev">
+        <div class="d">10/18(주일) · 특별주일</div>
+        <div class="t">담임목사님 말씀 · 전 교회학교(유아~청소년) 묵상 중심 설교 및 공과공부 · 간증자 2인 예정</div>
+      </div>
+      <div class="ev">
+        <div class="d">10/19~24 · 「말씀함께 묵상주간」</div>
+        <div class="t">위크 명칭 추후 확정 — '말씀함께' 행사명과 중복을 피하기 위해 용어 조정 중 <span class="chip need">명칭 미확정</span></div>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="card">
+    <h2>절기의 흐름</h2>
+    <div class="body">
+      <p style="margin:0 0 10px">본행사 나흘은 성격이 각각 다릅니다. 홍보와 준비를 어디에 얼마나 쓸지는 이 성격 차이를 기준으로 나눕니다.</p>
+      <div class="tw" data-c="flowtbl"><table class="flowtbl stk">
+        <tr><th style="width:16%">일자</th><th style="width:14%">성격</th><th style="width:34%">이 날 사람들이 하게 되는 것</th><th>필요한 것</th></tr>
+        <tr><td data-l="일자">10/16(금)</td><td data-l="성격">은혜 · 동기</td><td data-l="하는 일">외부 강사의 말씀묵상 공동체 사례를 듣는다</td><td data-l="필요한 것">신촌감리교회 임재훈 목사 섭외 · 사례 나눔 구성</td></tr>
+        <tr><td data-l="일자">10/17(토)</td><td data-l="성격">학습 · 도구</td><td data-l="하는 일">앱을 왜 쓰는지 알고, 쓰는 법을 익힌다</td><td data-l="필요한 것">앱 시연 자료 · 필요성 설명 구성 · 6층 글로리홀 · <span class="chip need">참석 범위 확정</span></td></tr>
+        <tr><td data-l="일자">10/18(주일)</td><td data-l="성격">선포 · 확산</td><td data-l="하는 일">전 세대가 같은 메시지를 듣는다</td><td data-l="필요한 것">간증자 2인 섭외 · 전 교회학교(유아~청소년) 묵상 중심 설교 및 공과 준비</td></tr>
+        <tr><td data-l="일자">10/19~24</td><td data-l="성격">실행 · 지속</td><td data-l="하는 일">실제로 매일 묵상한다</td><td data-l="필요한 것"><span class="chip need">진행 방식 미정</span> <span class="chip need">명칭 미확정</span></td></tr>
+      </table></div><div class="swipe">← 좌우로 밀어서 전체 보기</div>
+      <div class="note">
+        ※ '성격' 구분은 회의록에 없는 정리용 해석입니다. '필요한 것'은 회의록에 기재된 사항과, 기재가 없어 채워야 할 자리를 함께 표기했습니다.<br>
+        ※ 10/17 <b>"전체 리더십 필참"</b>의 범위(목장 초원지기 포함 여부)는 회의록에 기재되어 있지 않습니다. 홍보 대상 규모와 직결되므로 확인이 필요합니다.<br>
+        ※ 10/19~24는 성도가 매일 무언가를 하는 유일한 기간이나, 회의록에는 명칭 조정 중이라는 언급 외에 진행 방식이 정해진 바 없습니다.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>이 절기가 끝났을 때 남아야 할 것 <span class="tag" style="background:var(--amb)">미정</span></h2>
+    <div class="body">
+      <div class="fill">
+        <b>9/5 회의에서 확정</b>
+        각 분과장이 한 문장씩 써 온 뒤 합의하여 여기에 기재합니다.<br>
+        "이번 「말씀함께주간」이 끝났을 때, 우리 교회에 ______________ 가 남아 있기를 바란다."
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══════ 2 조직 · 분과 ══════ -->
+<section class="panel" id="t2">
+
+  <div class="card">
+    <h2>절기팀 구성</h2>
+    <div class="body">
+      <div class="tw orgwrap"><table class="orgtbl">
+        <tr><th class="grp">구분</th><th class="pos">직책</th><th class="nm2">성명</th><th class="rmk">비고</th></tr>
+
+        <tr><td rowspan="4" class="grp">지도·담당</td>
+            <td class="pos">담당목사</td><td class="nm2">강동윤 목사</td><td class="rmk">—</td></tr>
+        <tr><td class="pos">담당전도사</td><td class="nm2">이진 전도사</td><td class="rmk">—</td></tr>
+        <tr><td class="pos">담당전도사</td><td class="nm2">김성렬 전도사</td><td class="rmk">—</td></tr>
+        <tr><td class="pos">담당위원장</td><td class="nm2">최성제 장로</td><td class="rmk">—</td></tr>
+
+        <tr><td rowspan="3" class="grp">팀 운영</td>
+            <td class="pos">총무</td><td class="nm2">정은희 집사</td><td class="rmk">—</td></tr>
+        <tr><td class="pos">서기</td><td class="nm2">방성욱 권사</td><td class="rmk">—</td></tr>
+        <tr><td class="pos">회계</td><td class="nm2">최진선 권사</td><td class="rmk"><span class="chip wait">임시 지정</span><br class="mbr">9/5 확정 예정</td></tr>
+
+        <tr><td rowspan="6" class="grp">분과</td>
+            <td class="pos">기획분과장</td><td class="nm2">안상미 권사</td><td class="rmk">부총무 개념 · 전체 아이디어 총괄</td></tr>
+        <tr><td class="pos">중보기도분과장</td><td class="nm2">임영아 권사</td><td class="rmk">작년 「말씀함께주간」 절기팀 총무 경험</td></tr>
+        <tr><td class="pos">홍보분과장</td><td class="nm2">신연형 집사</td><td class="rmk">촬영 · 콘텐츠부</td></tr>
+        <tr><td class="pos">영상분과장</td><td class="nm2">남덕진 집사</td><td class="rmk">1차 회의 위촉 확정 · 전산사역국장</td></tr>
+        <tr class="off"><td class="pos">예배분과</td><td class="nm2">추후 필요시</td><td class="rmk">절기팀 내에서 협력 운영</td></tr>
+        <tr class="off"><td class="pos">데코분과</td><td class="nm2">추후 필요시</td><td class="rmk">절기팀 내에서 협력 운영 · 1층 로비 보수공사(11/14 종료 예정)</td></tr>
+
+        <tr><td rowspan="2" class="grp">팀원</td>
+            <td class="pos">팀원</td><td class="nm2">송태진 집사</td><td rowspan="2" class="rmk" style="vertical-align:middle">요셉2교구 초원지기 부부</td></tr>
+        <tr><td class="pos">팀원</td><td class="nm2">민경연 집사</td></tr>
+      </table></div>
+      <div class="note">
+        ※ 예배분과 · 데코분과는 우선 절기팀 전체가 협력하여 운영하며, 추후 필요 시 별도 구성합니다.<br>
+        ※ 연락처는 본 문서에 기재하지 않으며 별도 명단으로 관리합니다.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>역할별 업무 및 계획</h2>
+    <div class="body">
+      <div class="grid">
+
+        <div class="mini">
+          <div class="hdln">기획분과</div>
+          <div class="who">안상미 권사 · 부총무 개념</div>
+          <ul>
+            <li>전체 아이디어 총괄 및 방향 조율</li>
+            <li>회의 안건 사전 공유 · 진행</li>
+            <li>분과 간 일정 · 마감 관리</li>
+          </ul>
+        </div>
+
+        <div class="mini">
+          <div class="hdln">홍보분과</div>
+          <div class="who">신연형 집사</div>
+          <ul>
+            <li>사진 촬영 및 홍보소스 제작</li>
+            <li>SNS 카드뉴스 홍보</li>
+            <li>오프라인 홍보</li>
+            <li>홍보디자인실과 협업하여 제작물 배포</li>
+            <li>교구 전달</li>
+          </ul>
+        </div>
+
+        <div class="mini">
+          <div class="hdln">영상분과</div>
+          <div class="who">남덕진 집사 · 전산사역국장</div>
+          <ul>
+            <li>광고영상 기획 및 외주 섭외</li>
+            <li>촬영 · 편집 · 송출 스케줄링</li>
+            <li>컨퍼런스 · 주일예배 영상 디렉팅</li>
+          </ul>
+        </div>
+
+        <div class="mini">
+          <div class="hdln">중보기도분과</div>
+          <div class="who">임영아 권사</div>
+          <ul>
+            <li>분과원 약 10명 모집 · 별도 시간을 정해 기도 지원 · 매일 기도문 공유 — <b>기도 일정 아래 표 참조</b></li>
+          </ul>
+        </div>
+
+        <div class="mini">
+          <div class="hdln">서기</div>
+          <div class="who">방성욱 권사</div>
+          <ul>
+            <li>회의록 작성 · 보관</li>
+            <li>결정사항 기록 및 차기 회의 이행 점검</li>
+          </ul>
+        </div>
+
+        <div class="mini">
+          <div class="hdln">회계</div>
+          <div class="who">최진선 권사 · 임시 지정</div>
+          <ul>
+            <li>예산 약 700만 원 규모 집행 · 정산</li>
+            <li>2025년 집행 내역 확인 후 항목별 배분(안) 작성</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>중보기도 · 기도 일정 <span class="tag">중보기도분과 확정</span></h2>
+    <div class="body">
+      <div class="tw" data-c="ptbl"><table class="ptbl stk">
+        <tr><th style="width:9%">주간</th><th style="width:20%">일시</th><th style="width:36%">내용</th><th style="width:12%">담당</th><th>비고</th></tr>
+
+        <tr><td rowspan="3" class="wk" data-l="주간">7주간</td><td data-l="일시">9/1(화)</td><td data-l="내용">기도 제목 공유(단톡방)</td><td data-l="담당">임영아</td><td data-l="비고">—</td></tr>
+        <tr><td data-l="일시">9/2(수) 10시 30분</td><td data-l="내용">중보기도 분과원 첫모임 및 중보기도</td><td data-l="담당">〃</td><td data-l="비고">중보기도분과원 참여</td></tr>
+        <tr class="hl"><td data-l="일시">9/5(토) 8시</td><td data-l="내용">준비팀 정규모임 합심기도</td><td data-l="담당">다함께</td><td data-l="비고">마무리 기도(장로님)</td></tr>
+
+        <tr><td rowspan="3" class="wk" data-l="주간">6주간</td><td data-l="일시">9/7(월)</td><td data-l="내용">기도 제목 공유(단톡방)</td><td data-l="담당">임영아</td><td data-l="비고">—</td></tr>
+        <tr><td data-l="일시">9/9(수) 10시 30분</td><td data-l="내용">중보기도 분과원 온/오프라인 기도</td><td data-l="담당">〃</td><td data-l="비고">중보기도분과원 참여</td></tr>
+        <tr class="hl"><td data-l="일시">9/12(토) 8시</td><td data-l="내용">준비팀 정규모임 합심기도</td><td data-l="담당">다함께</td><td data-l="비고">마무리 기도(장로님)</td></tr>
+
+        <tr><td rowspan="2" class="wk" data-l="주간">5주간</td><td data-l="일시">9/14(월)</td><td data-l="내용">기도 제목 공유</td><td data-l="담당">임영아</td><td data-l="비고">—</td></tr>
+        <tr class="hl"><td data-l="일시">9/19(토) 8시</td><td data-l="내용">준비팀 정규모임 합심기도</td><td data-l="담당">다함께</td><td data-l="비고">마무리 기도(총무)</td></tr>
+
+        <tr><td rowspan="3" class="wk" data-l="주간">4주간</td><td data-l="일시">9/21(월)</td><td data-l="내용">기도 제목 공유(단톡방)</td><td data-l="담당">임영아</td><td data-l="비고">—</td></tr>
+        <tr><td data-l="일시">9/23(수) 10시 30분</td><td data-l="내용">중보기도 분과원 온/오프라인 기도</td><td data-l="담당">〃</td><td data-l="비고">중보기도분과원 참여</td></tr>
+        <tr class="hl"><td data-l="일시">9/27(주일) 3시 30분</td><td data-l="내용">준비팀 정규모임 합심기도</td><td data-l="담당">다함께</td><td data-l="비고">마무리 기도(장로님)</td></tr>
+
+        <tr><td rowspan="2" class="wk" data-l="주간">3주간</td><td data-l="일시">9/28(월)</td><td data-l="내용">기도 제목 공유(단톡방)</td><td data-l="담당">임영아</td><td data-l="비고">—</td></tr>
+        <tr><td data-l="일시">10/1(목) 저녁 8시</td><td data-l="내용">준비팀 줌 기도모임</td><td data-l="담당">임영아</td><td data-l="비고">준비팀 참여</td></tr>
+
+        <tr><td rowspan="3" class="wk" data-l="주간">2주간</td><td class="hlx" data-l="일시">10/4(주일) 3시 30분</td><td class="hlx" data-l="내용">준비팀 정규모임 합심기도</td><td class="hlx" data-l="담당">다함께</td><td class="hlx" data-l="비고">마무리 기도(장로님)</td></tr>
+        <tr><td data-l="일시">10/5(월)</td><td data-l="내용">기도 제목 공유(단톡방)</td><td data-l="담당">임영아</td><td data-l="비고">—</td></tr>
+        <tr><td data-l="일시">10/7(수)</td><td data-l="내용">중보기도 분과원 온/오프라인 기도</td><td data-l="담당">〃</td><td data-l="비고">중보기도분과원 참여</td></tr>
+
+        <tr><td rowspan="3" class="wk" data-l="주간">1주간</td><td class="hlx" data-l="일시">10/11(주일) 3시 30분</td><td class="hlx" data-l="내용">준비팀 정규모임 합심기도</td><td class="hlx" data-l="담당">다함께</td><td class="hlx" data-l="비고">마무리 기도(총무)</td></tr>
+        <tr><td data-l="일시">10/12(월)~15(목)</td><td data-l="내용">준비팀 릴레이 금식기도</td><td data-l="담당">다함께</td><td data-l="비고">준비팀 참여</td></tr>
+        <tr><td data-l="일시">10/15(목) 저녁 8시</td><td data-l="내용">준비팀 줌 기도모임</td><td data-l="담당">임영아</td><td data-l="비고">준비팀 참여</td></tr>
+      </table></div><div class="swipe">← 좌우로 밀어서 전체 보기</div>
+
+      <h3>운영 방식</h3>
+      <ul class="li">
+        <li>매주 <b>월요일</b> 단톡방에 기도제목 공유</li>
+        <li>월 2회 <b>수요일</b> 중보기도 분과원 온/오프라인 기도</li>
+        <li>매주 <b>토요일 혹은 주일</b> 준비팀 정규 모임 합심기도</li>
+        <li>10월 2~3회 준비팀 <b>줌 기도</b></li>
+        <li>준비팀 <b>릴레이 금식기도</b> 10/12(월)~15(목) — 준비팀 금식과 함께 말씀기도 카톡방에 공유</li>
+      </ul>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══════ 3 준비 일정 ══════ -->
+<section class="panel" id="t3">
+
+  <div class="keynote">
+    <div class="kn-tag">중요 · 기획분과</div>
+    <div class="kn-body">
+      <div class="kn-ttl">9월에 준비를 마치고, 10월은 홍보에 집중합니다</div>
+      <ul class="kn-list">
+        <li>이번 절기는 <b>「말씀함께 앱」 출시</b>와 함께 진행됩니다.</li>
+        <li>10/17 컨퍼런스는 <b>앱 사용법을 다루는 자리</b>이므로, 참석자가 이미 앱을 설치한 상태여야 합니다.</li>
+        <li>설치가 본행사 뒤로 밀리면 <b>순서가 뒤집힙니다.</b></li>
+        <li>따라서 <b>10월 초부터</b> 앱 설치를 유도하는 <b>프로모션</b>이 돌아가야 합니다.</li>
+        <li>그러려면 <b>9월 안에 아이데이션과 결정을 마쳐야</b> 하며, 이 아이데이션을 <b>9/5 회의에서 먼저</b> 다루어야 합니다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>정기 준비모임</h2>
+    <div class="body">
+      <div class="box" style="margin-bottom:12px">
+        <span class="lbl">운영 원칙</span> — 매주 최소 1회 오프라인 모임. 절기팀 정기모임은 시작 전 짧은 중보기도 시간을 갖는 방식으로 진행합니다.<br>
+        <span class="lbl">중보기도</span> — 중보기도팀은 분과원들과 <b>별도 시간을 정해</b> 기도로 지원합니다. 절기팀 정기모임과 분리하여 운영합니다.
+      </div>
+      <div class="tw" data-c="mtgtbl"><table class="mtgtbl stk">
+        <tr><th style="width:20%">일자</th><th style="width:14%">시간</th><th style="width:14%">상태</th><th>비고</th></tr>
+        <tr><td data-l="일자">9/5(토)</td><td data-l="시간">08:00</td><td data-l="상태"><span class="chip ing">차기 회의</span></td><td data-l="비고">4층 대회의실 · 분과별 계획 발표 · 예약 불요</td></tr>
+        <tr><td data-l="일자">9/12(토)</td><td data-l="시간">08:00</td><td data-l="상태"><span class="chip ok">확정</span></td><td data-l="비고">4층 · 예약 불요</td></tr>
+        <tr><td data-l="일자">9/19(토)</td><td data-l="시간">08:00</td><td data-l="상태"><span class="chip ok">확정</span></td><td data-l="비고">4층 · 예약 불요</td></tr>
+        <tr><td data-l="일자">9/27(주일)</td><td data-l="시간">15:30</td><td data-l="상태"><span class="chip ok">확정</span></td><td data-l="비고">주일 오후로 전환 · <span class="need-t">장소 미정</span>(담당자 섭외 예정)</td></tr>
+        <tr><td data-l="일자">10/4(주일)</td><td data-l="시간">15:30</td><td data-l="상태"><span class="chip ok">확정</span></td><td data-l="비고">10월 매주일 모임 · <span class="need-t">장소 미정</span></td></tr>
+        <tr><td data-l="일자">10/11(주일)</td><td data-l="시간">15:30</td><td data-l="상태"><span class="chip ok">확정</span></td><td data-l="비고">10월 매주일 모임 · 본행사 직전 · <span class="need-t">장소 미정</span></td></tr>
+      </table></div><div class="swipe">← 좌우로 밀어서 전체 보기</div>
+      <div class="note" style="margin-top:9px">
+        ※ 10월은 <b>매주일 모임을 기본</b>으로 하며, 필요시 온·오프라인으로 추가 진행합니다. 필요시 분과별 진행도 가능합니다.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>회차별 안건 <span class="tag" style="background:var(--amb)">작성 중</span></h2>
+    <div class="body">
+      <div class="tw" data-c="agdtbl"><table class="agdtbl stk">
+        <tr><th style="width:16%">회차</th><th style="width:34%">안건</th><th>결과</th></tr>
+        <tr>
+          <td data-l="회차"><b>1차</b><br><span class="note">팀 구성</span></td>
+          <td data-l="안건">절기팀 구성 · 분과장 위촉 · 전체 일정 공유 · 캠페인 브레인스토밍</td>
+          <td data-l="결과">서기 · 영상분과장 위촉 확정 / 정기모임 일정 확정 / 데코분과 미운영 결정 / 앱·책자 정책 TF 이관 / 분과별 계획 준비 과제 부여</td>
+        </tr>
+        <tr>
+          <td data-l="회차"><b>2차</b><br><span class="note">9/5(토)</span></td>
+          <td data-l="안건">각 분과별 올해 추진 계획 발표 · 홍보 · 캠페인 아이디어 구체화</td>
+          <td data-l="결과"><span class="chip ing">예정</span></td>
+        </tr>
+        <tr><td data-l="회차"><b>3차</b><br><span class="note">9/12(토)</span></td><td class="fill" style="border:0;background:none;text-align:left;padding:7px 10px" data-l="안건">2차 결과에 따라 확정</td><td data-l="결과">—</td></tr>
+        <tr><td data-l="회차"><b>4차</b><br><span class="note">9/19(토)</span></td><td class="fill" style="border:0;background:none;text-align:left;padding:7px 10px" data-l="안건">2차 결과에 따라 확정</td><td data-l="결과">—</td></tr>
+        <tr><td data-l="회차"><b>5차</b><br><span class="note">9/27(주일)</span></td><td class="fill" style="border:0;background:none;text-align:left;padding:7px 10px" data-l="안건">2차 결과에 따라 확정</td><td data-l="결과">—</td></tr>
+      </table></div><div class="swipe">← 좌우로 밀어서 전체 보기</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>확인 · 결정이 필요한 사항</h2>
+    <div class="body">
+      <div class="box warn">
+        <ul class="chk">
+          <li><b>앱 출시일 확정</b> — 9월 말 예정, 프로모션 시작일의 기준</li>
+          <li>예산 <b>총 규모</b> — 전체 행사 컨셉 · 홍보 방향 확정 후 결정</li>
+          <li>앱 · 책자 <b>유 · 무료 정책</b> 결정 (앱개발 TF, 2주 내) — 결정 전까지 홍보 문구 확정 불가</li>
+          <li>「말씀함께 묵상주간」 <b>공식 명칭</b> 확정</li>
+          <li>9/27 이후 <b>모임 장소</b> 확정 (담당자 섭외 예정)</li>
+          <li>캠페인 · 홍보 아이디어 <b>담임목사님 컨펌</b></li>
+          <li>회계 <b>최종 확정</b> — 최진선 권사 임시 지정, 9/5 회의</li>
+          <li>10/17 컨퍼런스 <b>"전체 리더십" 참석 범위</b> — 목장 초원지기 포함 여부 (회의록 미기재)</li>
+          <li>10/19~24 묵상주간 <b>진행 방식</b></li>
+          <li>10/16 금요성령집회 · 10/18 특별주일 <b>구성 협의 방식</b> — 예배분과 별도 구성 없이 절기팀 협력</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══════ 4 앱 출시 · 정책 ══════ -->
+<section class="panel" id="t4">
+
+  <div class="keynote">
+    <div class="kn-tag">중요 · 기획분과</div>
+    <div class="kn-body">
+      <div class="kn-ttl">출시일과 유·무료 정책이 정해져야 홍보를 시작할 수 있습니다</div>
+      <ul class="kn-list">
+        <li><b>앱 출시일</b>(9월 말 예정)은 <b>앱개발 TF</b> 확정 사항입니다. 확정되는 즉시 프로모션 시작일을 역산합니다.</li>
+        <li><b>앱 · 책자 유 · 무료 정책</b>은 아직 미확정입니다. TF 내부는 '앱 전면 무료' 방향이며 <b>2주 내 정책 결정이 필요</b>합니다.</li>
+        <li>이 둘이 정해지기 전에는 <b>홍보 문구와 인증 할인 설계를 확정할 수 없습니다.</b></li>
+        <li>따라서 <b>9/5 회의에서 TF 진행 상황을 먼저 확인</b>해야 합니다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>앱 출시일 <span class="tag" style="background:var(--amb)">예정</span></h2>
+    <div class="body">
+      <div class="keydate">
+        <div class="kd-lbl">「말씀함께 앱」 출시</div>
+        <div class="kd-val">9월 말 <span class="kd-st">예정</span></div>
+        <div class="kd-memo">
+          출시일이 정해져야 프로모션 시작일과 홍보물 제작 마감일이 역산됩니다.
+          <b>10월 초 프로모션 시작</b>을 기준으로 하면 9월 말 출시가 최소 조건입니다.
+        </div>
+      </div>
+      <div class="note" style="margin-top:9px">
+        ※ 출시일은 <b>앱개발 TF</b> 확정 사항으로, 절기팀은 확정된 날짜에 맞춰 일정을 조정합니다.
+        회의록에는 기재되어 있지 않으며 <span class="need-t">확정 필요</span>합니다.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>「말씀함께 앱」</h2>
+    <div class="body">
+      <ul class="li">
+        <li>약 4개월 전 <b>앱개발 TF</b> 결성 — 현재 <b>목업 단계</b></li>
+        <li>앱에 <b>묵상 게시판 · 나눔방</b> 기능 포함 예정</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>책자 및 유 · 무료 정책 <span class="tag" style="background:var(--red)">미확정</span></h2>
+    <div class="body">
+      <ul class="li">
+        <li>책자 — 유료, <b>목자의지혜 출판국</b> 발행</li>
+        <li>책자와 앱의 유 · 무료 정책은 <b>미확정</b>. TF 내부적으로는 '앱 전면 무료' 방향으로 논의 중이며, <b>2주 내 정책 결정 필요</b></li>
+      </ul>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══════ 5 예산 ══════ -->
+<section class="panel" id="t5">
+
+  <div class="keynote">
+    <div class="kn-tag">중요 · 기획분과</div>
+    <div class="kn-body">
+      <div class="kn-ttl">컨셉과 홍보 방향을 정한 뒤 예산 규모를 잡습니다</div>
+      <ul class="kn-list">
+        <li><b>2024년 요청 예산은 700만 원</b>, <b>2025년 실제 집행은 1,102만 원</b>입니다.</li>
+        <li>올해는 <b>앱 설치 유도</b>가 목표이므로 항목 구성이 2025년과 달라집니다. 굿즈보다 <b>프로모션 쪽 비중</b>을 검토해야 합니다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>예산 <span class="tag" style="background:var(--amb)">미확정</span></h2>
+    <div class="body">
+      <div class="box">
+        작년 예산은 <b>약 700만 원 수준</b>(영상 제작비 비중 최대)으로 파악되며, 올해도 유사한 규모로 예상.
+        <div class="note">1차 회의록 기재 내용 · 세부 집행 내역은 네이버카페 '선한목자교회 행사지원국' 참고 예정.</div>
+      </div>
+      <div class="note" style="margin-top:8px">
+        ※ 회의록의 <b>700만 원</b>은 홍보비를 제외한 기준으로 보입니다. 2025년 실제 집행은 홍보비 제외 <b>685만 원</b>, 포함 <b>1,102만 원</b>입니다. <span class="need-t">기준 확인 필요</span><br>
+        ※ 회계 <b>최진선 권사</b>(임시 지정 · 9/5 확정 예정) 담당.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>올해 항목별 배분(안)</h2>
+    <div class="body">
+      <div class="fill">
+        <b>회계 확정 후 작성</b>
+        2025년 집행 내역 확인 → 항목별 배분 초안 → 회의 승인 순으로 채웁니다.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>참고 — 2024 · 2025년 자료</h2>
+    <div class="body">
+      <p style="margin:0 0 10px; font-size:14px; color:var(--ink2)">
+        2024년 예산 요청안과 2025년 실제 집행 내역입니다. 항목 구성과 규모를 잡을 때 참고합니다.
+      </p>
+
+      <details class="fold">
+        <summary>2024 예산 요청안 <span class="fs">확정 7,000,000원</span></summary>
+        <div class="fold-body">
+          <div class="note" style="margin:0 0 8px">
+            행사일시 24. 11. 9.(토) 오전 · 담당목사 강동윤 목사 · 팀장 조은진 장로 · 작성 2024. 10. 6. 회계 오윤주 집사<br>
+            목적 — Walking With Jesus 시리즈의 일환으로 본교회 묵상집인 말씀함께 홍보 및 성도들에게 말씀으로의 회귀를 촉구하기 위해 마련됨
+          </div>
+          <div class="tw" data-c="bdgtbl"><table class="bdgtbl stk">
+            <tr><th style="width:18%">구분</th><th>내역</th><th style="width:20%">예산</th></tr>
+            <tr><td data-l="구분">영상</td><td data-l="내역">영상제작 2편(1,000,000 × 2)</td><td data-l="예산">2,000,000</td></tr>
+            <tr><td data-l="구분">홍보</td><td data-l="내역">디자인제작 200,000 · 현수막 40,000 · 숏츠제작 등 300,000 · 리플렛제작 500,000</td><td data-l="예산">1,400,000</td></tr>
+            <tr><td data-l="구분">데코</td><td data-l="내역">로비 및 본당 4폭 현수막 600,000</td><td data-l="예산">600,000</td></tr>
+            <tr><td data-l="구분">행사운영비</td><td data-l="내역">출연비 300,000 · 출연자 간식지원 800,000 · 행사 시 상품지급 350,000</td><td data-l="예산">1,600,000</td></tr>
+            <tr><td data-l="구분">행사준비비</td><td data-l="내역">회의 시 간식 및 식사</td><td data-l="예산">1,240,000</td></tr>
+            <tr><td data-l="구분">예비비</td><td data-l="내역">—</td><td data-l="예산">160,000</td></tr>
+            <tr><td colspan="2" style="text-align:right; font-weight:700; background:var(--g-l)" data-l="내역">계</td><td style="font-weight:800; background:var(--g-l)" data-l="예산">7,000,000</td></tr>
+          </table></div><div class="swipe">← 좌우로 밀어서 전체 보기</div>
+        </div>
+      </details>
+
+      <details class="fold">
+        <summary>2025 예산 사용 내역 <span class="fs">집행 11,028,351원</span></summary>
+        <div class="fold-body">
+          <div class="tw" data-c="usetbl"><table class="usetbl">
+            <tr><th>사용 내역</th><th style="width:22%">사용 금액</th></tr>
+            <tr><td>현수막(정기구독 모집)</td><td>33,000</td></tr>
+            <tr><td>강대상보드(콘퍼런스 / 특별주일, 다윗공동체, 젊은이 교회)</td><td>90,200</td></tr>
+            <tr><td>말씀함께 볼펜 제작 2,330개</td><td>2,511,740</td></tr>
+            <tr><td>묵상실습용 볼펜 1,000개</td><td>292,320</td></tr>
+            <tr><td>속회 볼펜 증정 쇼핑백 160개</td><td>84,800</td></tr>
+            <tr><td>책갈피 크라프트지 3,000장</td><td>294,000</td></tr>
+            <tr><td>스탬프 5개</td><td>92,000</td></tr>
+            <tr><td>책갈피 스티커 9세트</td><td>93,220</td></tr>
+            <tr><td>데코 판넬 제작</td><td>1,111,000</td></tr>
+            <tr><td>데코 시트지</td><td>188,100</td></tr>
+            <tr><td>데코 시 필요 물품(고정 철물 및 페인트 물품 등)</td><td>149,800</td></tr>
+            <tr><td>묵상나눔게시판 홈페이지 기술지원비</td><td>200,000</td></tr>
+            <tr><td>말씀함께 콘티 실습지 디자인비</td><td>150,000</td></tr>
+            <tr><td>홍보영상 내레이션</td><td>100,000</td></tr>
+            <tr><td>교회학교 스탬프 및 키링</td><td>721,000</td></tr>
+            <tr><td>나눔자분들과 주일 간증자분들 선물 구입(10분)</td><td>100,000</td></tr>
+            <tr><td>간식 및 식대</td><td>636,220</td></tr>
+            <tr class="sub"><td>리플렛 제작 4,800매 <span class="acct">예산과목 · 말씀함께 홍보비</span></td><td>1,621,257</td></tr>
+            <tr class="sub"><td>말씀함께 정기 구독 신청서 5,000매 <span class="acct">예산과목 · 말씀함께 홍보비</span></td><td>159,694</td></tr>
+            <tr class="sub"><td>영상제작 6건 <span class="acct">예산과목 · 말씀함께 홍보비</span></td><td>2,400,000</td></tr>
+            <tr><td style="text-align:right; font-weight:700; background:var(--g-l)">합계 (말씀함께 홍보비 3건 미포함)</td><td style="font-weight:800; background:var(--g-l)">6,847,400</td></tr>
+            <tr><td style="text-align:right; font-weight:700; background:var(--g-l)">합계 (말씀함께 홍보비 3건 포함)</td><td style="font-weight:800; background:var(--g-l)">11,028,351</td></tr>
+          </table></div><div class="swipe">← 좌우로 밀어서 전체 보기</div>
+        </div>
+      </details>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══════ 6 캠페인 ══════ -->
+<section class="panel" id="t6">
+
+  <div class="keynote">
+    <div class="kn-tag">중요 · 기획분과</div>
+    <div class="kn-body">
+      <div class="kn-ttl">아직 아이데이션 단계입니다 — 9월 안에 안을 좁혀야 합니다</div>
+      <ul class="kn-list">
+        <li>아래 항목은 1차 회의 <b>브레인스토밍 결과</b>일 뿐, <b>확정된 것은 하나도 없습니다.</b></li>
+        <li>이번 절기의 목표는 <b>앱 설치 유도</b>입니다. 아이디어를 고를 때 <b>설치로 이어지는가</b>를 기준으로 봅니다.</li>
+        <li>9/5 회의에서 <b>브레인스토밍을 이어가고</b>, 담임목사님께 올릴 안을 추립니다.</li>
+        <li>확정된 항목은 <b>담당 분과와 마감일을 함께</b> 적어 아래 「확정 캠페인」으로 옮깁니다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>캠페인 · 홍보 아이디어 <span class="tag" style="background:var(--amb)">브레인스토밍 · 미확정</span></h2>
+    <div class="body">
+      <div class="tw" data-c="cmptbl"><table class="cmptbl stk">
+        <tr><th style="width:5%">#</th><th style="width:26%">아이디어</th><th>회의록 기재 내용</th><th style="width:20%">확정 전 확인할 것</th></tr>
+        <tr><td data-l="#">1</td><td data-l="아이디어"><b>책자 지참 캠페인</b></td><td data-l="회의록 기재">10월 한 달간(특히 첫째 · 둘째 주) 책자를 지참 · 휴대하도록 독려. 예배 시 책자를 흔드는 퍼포먼스 등 제안</td><td data-l="확인할 것">퍼포먼스 시행 여부 · 예배 협의 주체</td></tr>
+        <tr><td data-l="#">2</td><td data-l="아이디어"><b>주일 커피차 + 인증 할인</b></td><td data-l="회의록 기재">주일 커피차 운영 + 책자/앱 인증 시 할인(예: 500원) 프로모션 — 예산 내 집행 가능성 있음</td><td data-l="확인할 것">앱 유 · 무료 정책 확정 후 설계 가능</td></tr>
+        <tr><td data-l="#">3</td><td data-l="아이디어"><b>등신대 포토존</b></td><td data-l="회의록 기재">등신대(실물 크기 세움 조형물) 활용 포토존 · 인증샷 — 기존 보유 등신대 활용 가능</td><td data-l="확인할 것">설치 장소 — 1층 로비 공사 중</td></tr>
+        <tr><td data-l="#">4</td><td data-l="아이디어"><b>임시서점 오프라인 접점</b></td><td data-l="회의록 기재">임시서점(9/5 오픈)을 활용한 오프라인 접점 마련 — 9월 말부터 책자 판매 시작 예정(월 약 2,000권 판매 규모)</td><td data-l="확인할 것">초도 물량 · 발주 시점</td></tr>
+        <tr><td data-l="#">5</td><td data-l="아이디어"><b>홍보영상 · 인스타 콘텐츠</b></td><td data-l="회의록 기재">책과 앱을 함께 노출하는 홍보영상 · 인스타그램 콘텐츠 제작</td><td data-l="확인할 것">외주 섭외 마감일 역산 필요</td></tr>
+      </table></div><div class="swipe">← 좌우로 밀어서 전체 보기</div>
+      <div class="note">※ 위 아이디어는 확정 사항이 아니며, 차주 회의에서 브레인스토밍을 이어가 담임목사님 컨펌 후 확정하기로 함.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>확정 캠페인</h2>
+    <div class="body">
+      <div class="fill">
+        <b>담임목사님 컨펌 후 기재</b>
+        확정된 항목만 이곳으로 옮기고, 담당 분과와 마감일을 함께 적습니다.
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══════ 7 회의 자료 ══════ -->
+<section class="panel" id="t7">
+  <div class="card">
+    <h2>회의 자료 · 한 장</h2>
+    <div class="body">
+      <p style="margin:0 0 12px">회의 때마다 A4 한 장짜리 사전 공유문서를 만들어 미리 돌리고, 회의 후 결과를 이 문서에 반영합니다.</p>
+      <div class="tw" data-c="doctbl"><table class="doctbl stk">
+        <tr><th style="width:18%">회차</th><th style="width:26%">문서</th><th style="width:14%">상태</th><th>내용</th></tr>
+        <tr>
+          <td data-l="회차"><b>2차 · 9/5(토)</b></td>
+          <td data-l="문서">사전 공유문서<br><span class="note">gsmch-ww-brief-0905</span></td>
+          <td data-l="상태"><span class="chip ok">작성 완료</span></td>
+          <td data-l="내용">회의 순서 · 분과별 사전 질문 · 결정 필요 사항 · 기도제목</td>
+        </tr>
+        <tr>
+          <td data-l="회차">3차 · 9/12(토)</td>
+          <td data-l="문서">—</td>
+          <td data-l="상태"><span class="chip wait">예정</span></td>
+          <td data-l="내용">2차 결과 반영 후 작성</td>
+        </tr>
+      </table></div><div class="swipe">← 좌우로 밀어서 전체 보기</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>기도제목</h2>
+    <div class="body">
+      <ul class="li">
+        <li>이 절기가 행사에 머물지 않고, 온 교회가 말씀 앞에 서는 시간이 되도록</li>
+        <li>각 분과장이 자격이 아니라 부르심으로 서도록 — 1차 회의에서 다수가 "자격이 부족하다고 느꼈으나 말씀으로 훈련받는 은혜의 시간"이라는 소감을 나눔</li>
+        <li>앱과 책자가 도구에 머물고 목적이 되지 않도록</li>
+        <li>새로 세워진 총무 · 회계와 담당 목사님 · 전도사님들이 한 방향으로 서도록</li>
+        <li>준비 기간이 짧으나 각자의 자리를 지키며 한마음으로 기쁘게 감당하도록</li>
+      </ul>
+      <div class="note">※ 모임 시작 전 짧은 중보기도로 진행. 매일 기도문은 중보기도분과에서 별도 공유(작년 방식 준용).</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  선한목자교회 멀티미디어위원회 · 말씀함께 절기팀 기획분과<br>
+  본 문서는 절기팀 1차 회의록에 기재된 내용과 이후 공유된 자료를 근거로 작성되었습니다. · gsmch-ww-plan
+</footer>
+
+</div>
+
+<script>
+(function(){
+  var nav=document.querySelector('nav.tabs');
+  var btns=document.querySelectorAll('nav.tabs button');
+  var pans=document.querySelectorAll('.panel');
+
+  function navTop(){
+    // sticky 적용 전 기준 위치 계산
+    var y=0, el=nav;
+    while(el){ y+=el.offsetTop; el=el.offsetParent; }
+    return y;
+  }
+  function show(id){
+    btns.forEach(function(b){b.classList.toggle('on', b.dataset.t===id);});
+    pans.forEach(function(p){p.classList.toggle('on', p.id===id);});
+  }
+  function go(id, scroll){
+    show(id);
+    if(scroll) window.scrollTo(0, navTop());
+  }
+  btns.forEach(function(b){
+    b.addEventListener('click',function(){
+      location.hash='v1/'+b.dataset.t;
+      go(b.dataset.t, true);
+    });
+  });
+  var h=(location.hash||'').split('/')[1];
+  if(h && document.getElementById(h)) go(h, true);
+})();
+</script>
+</body>
+</html>
