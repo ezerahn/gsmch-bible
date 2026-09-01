@@ -188,6 +188,18 @@ nav.tabs button.on .n{color:var(--g);}
   padding:0 7px; border-radius:9px; margin-left:5px;
 }
 
+/* ── 하위 탭 ── */
+.stabs{display:flex; gap:6px; margin-bottom:14px; flex-wrap:wrap;}
+.stabs button{
+  border:1px solid var(--g-b2); background:#fff; color:var(--g-d);
+  padding:7px 16px; font-size:14px; font-weight:700; border-radius:20px;
+  cursor:pointer; font-family:inherit; letter-spacing:-.3px;
+}
+.stabs button.on{background:var(--g); border-color:var(--g); color:#fff;}
+.spanel{display:none;}
+.spanel.on{display:block;}
+@media print{ .stabs{display:none;} .spanel{display:block !important;} }
+
 /* ── 카드/섹션 ── */
 .card{background:#fff; border:1px solid var(--line); border-radius:6px; margin-bottom:16px;}
 .card > h2{border-radius:5px 5px 0 0;}
@@ -589,6 +601,13 @@ footer{margin-top:26px; padding:16px 0; border-top:1px solid var(--line);
 <!-- ══════ 2 조직 · 분과 ══════ -->
 <section class="panel" id="t2">
 
+  <div class="stabs">
+    <button class="on" data-s="s1">조직 · 분과</button>
+    <button data-s="s2">중보기도</button>
+  </div>
+
+  <div class="spanel on" id="s1">
+
   <div class="card">
     <h2>절기팀 구성</h2>
     <div class="body">
@@ -692,6 +711,10 @@ footer{margin-top:26px; padding:16px 0; border-top:1px solid var(--line);
     </div>
   </div>
 
+  </div>
+
+  <div class="spanel" id="s2">
+
   <div class="card">
     <h2>중보기도 · 기도 일정 <span class="tag">중보기도분과 확정</span></h2>
     <div class="body">
@@ -734,6 +757,8 @@ footer{margin-top:26px; padding:16px 0; border-top:1px solid var(--line);
         <li>준비팀 <b>릴레이 금식기도</b> 10/12(월)~15(목) — 준비팀 금식과 함께 말씀기도 카톡방에 공유</li>
       </ul>
     </div>
+  </div>
+
   </div>
 
 </section>
@@ -1094,6 +1119,16 @@ footer{margin-top:26px; padding:16px 0; border-top:1px solid var(--line);
   });
   var h=(location.hash||'').split('/')[1];
   if(h && document.getElementById(h)) go(h, true);
+
+  // 하위 탭 — 자리 이동 없이 내용만 전환
+  var sbtn=document.querySelectorAll('.stabs button');
+  var span=document.querySelectorAll('.spanel');
+  sbtn.forEach(function(b){
+    b.addEventListener('click',function(){
+      sbtn.forEach(function(x){x.classList.toggle('on', x===b);});
+      span.forEach(function(p){p.classList.toggle('on', p.id===b.dataset.s);});
+    });
+  });
 })();
 </script>
 </body>
