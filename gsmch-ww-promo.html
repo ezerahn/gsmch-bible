@@ -588,6 +588,27 @@ footer{margin-top:26px; padding:16px 0; border-top:1px solid var(--line);
 .lvimg img.sm2{max-width:700px;}
 
 
+
+/* ── 두 목표 선언 띠 ── */
+.twogoal{margin-bottom:16px;}
+.tg-cap{font-size:12.5px; letter-spacing:2px; color:var(--ink3); font-weight:700; margin-bottom:8px;}
+.tg-row{display:flex; align-items:stretch; gap:0;}
+.tg-box{flex:1; padding:18px 22px; border-radius:8px; border:1.5px solid var(--line); background:#fff;}
+.tg-box.a{border-color:var(--g-b2); background:var(--g-ll);}
+.tg-box.b{border-color:#E8663A; background:#FCF0E8; box-shadow:0 2px 10px rgba(232,102,58,.14);}
+.tg-k{font-size:12.5px; color:var(--ink3); font-weight:700; letter-spacing:.3px;}
+.tg-t{font-size:26px; font-weight:800; letter-spacing:-1px; line-height:1.2; margin:4px 0 6px; color:#C0392B;}
+.tg-box.b .tg-t{color:#C0392B;}
+.tg-d{font-size:13.5px; color:var(--ink2);}
+.tg-arrow{width:56px; flex:0 0 56px; display:flex; align-items:center; justify-content:center; font-size:30px; color:#E8663A; font-weight:800;}
+.tg-note{font-size:13px; color:var(--ink3); margin-top:9px;}
+.tg-note b{color:var(--ink);}
+@media(max-width:680px){
+  .tg-row{flex-direction:column;}
+  .tg-arrow{width:auto; flex:0 0 auto; height:34px; transform:rotate(90deg); font-size:26px;}
+  .tg-t{font-size:22px;}
+}
+
 /* ── 손글씨 동그라미 강조 ── */
 .chlgrid .cv span.circ{position:relative; display:inline-block; padding:0 6px; font-size:inherit; font-weight:800; color:inherit; margin:0; letter-spacing:inherit;}
 .circ svg{position:absolute; left:-16px; top:-11px; width:calc(100% + 32px); height:calc(100% + 20px); pointer-events:none; overflow:visible;}
@@ -1214,6 +1235,25 @@ tr.pickrow td b{color:#B4471C;}
 <!-- ══════ 1 목표 ══════ -->
 <section class="panel on" id="t1">
 
+  <div class="twogoal">
+    <div class="tg-cap">목표는 둘로 나뉩니다</div>
+    <div class="tg-row">
+      <div class="tg-box a">
+        <div class="tg-k">10월 초 프로모션 · 1단계</div>
+        <div class="tg-t">앱 설치</div>
+        <div class="tg-d">이벤트로 수치를 올릴 수 있는 영역</div>
+      </div>
+      <div class="tg-arrow">→</div>
+      <div class="tg-box b">
+        <div class="tg-k">묵상주간 · 3단계</div>
+        <div class="tg-t">말씀함께 습관</div>
+        <div class="tg-d">함께하는 사람과 짧은 완주 경험이 만드는 영역</div>
+      </div>
+    </div>
+    <div class="tg-note">사례들이 공통으로 말하는 것은 "많이 받게 하라"가 아니라 <b>"받은 뒤에 남게 하라"</b>입니다.</div>
+  </div>
+
+
   <div class="card hero">
     <h2>목표 — 앱을 몇 명이 깔고, 몇 명이 완주하는가 <span class="tag" style="background:var(--red)">숫자 확인 중</span></h2>
     <div class="body">
@@ -1578,24 +1618,6 @@ tr.pickrow td b{color:#B4471C;}
     </div>
   </div>
 
-  <div class="card">
-    <h2>목표는 둘로 나뉩니다</h2>
-    <div class="body">
-      <div class="grid">
-        <div class="mini">
-          <div class="hdln">10월 초 프로모션</div>
-          <div class="who">1단계</div>
-          <ul><li><b>설치를 만든다</b></li><li>이벤트로 수치를 올릴 수 있는 영역</li></ul>
-        </div>
-        <div class="mini">
-          <div class="hdln">묵상주간</div>
-          <div class="who">3단계</div>
-          <ul><li><b>습관을 만든다</b></li><li>함께하는 사람과 짧은 완주 경험이 만드는 영역</li></ul>
-        </div>
-      </div>
-      <div class="note">※ 사례들이 공통으로 말하는 것은 "많이 받게 하라"가 아니라 "받은 뒤에 남게 하라"입니다.</div>
-    </div>
-  </div>
 
 
   </div>
