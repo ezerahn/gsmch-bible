@@ -3,9 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light only">
+<meta name="supported-color-schemes" content="light">
 <title>말씀함께주간 2026 · 운영(안)</title>
 <style>
 :root{
+  color-scheme:light only;
   --g:#07913B; --g-d:#045C26; --g-dd:#023618; --g-l:#F1F8F3; --g-ll:#F8FCF9;
   --g-b:#D6E8DB; --g-b2:#B5D6C0;
   --ink:#1b2620; --ink2:#4a5a51; --ink3:#7d8b83;
@@ -14,6 +17,7 @@
   --line:#E3EAE5; --white:#fff;
 }
 *{box-sizing:border-box;}
+html{background:#F4F7F5; -webkit-text-fill-color:inherit;}
 body{
   margin:0; background:#F4F7F5; color:var(--ink);
   font-family:"Noto Sans KR","Malgun Gothic","Apple SD Gothic Neo",sans-serif;
@@ -23,6 +27,14 @@ body{
 .wrap{max-width:1080px; margin:0 auto; padding:0 18px 60px;}
 header.hd .wrap, .proc .wrap{padding-bottom:0;}
 a{color:inherit;}
+
+/* ── 다크모드에서도 색을 그대로 유지 ── */
+@media (prefers-color-scheme: dark){
+  html, body{background:#F4F7F5; color:var(--ink);}
+  /* 일부 인앱 브라우저가 색을 반전시키는 것을 되돌림 */
+  html{-webkit-filter:none !important; filter:none !important;}
+  img{-webkit-filter:none !important; filter:none !important;}
+}
 
 /* ── 상단바 ── */
 .topbar{background:var(--g-dd); color:#cde8d6; font-size:12.5px;}
@@ -110,7 +122,8 @@ nav.tabs button.on{color:var(--g-d); border-bottom-color:var(--g);}
 nav.tabs button.on .n{color:var(--g);}
 
 /* ── 패널 ── */
-.panel{display:none; padding-top:22px;}
+.panel{display:none; padding-top:22px; overflow-anchor:none;}
+body{overflow-anchor:none;}
 .panel.on{display:block;}
 
 /* ── 강조 배너 ── */
@@ -189,7 +202,12 @@ nav.tabs button.on .n{color:var(--g);}
 }
 
 /* ── 하위 탭 ── */
-.stabs{display:flex; gap:6px; margin-bottom:14px; flex-wrap:wrap;}
+.stabs{
+  display:flex; gap:6px; margin-bottom:14px; flex-wrap:wrap;
+  position:sticky; top:47px; z-index:15;
+  background:#F4F7F5; padding:9px 0 9px;
+  border-bottom:1px solid var(--line);
+}
 .stabs button{
   border:1px solid var(--g-b2); background:#fff; color:var(--g-d);
   padding:7px 16px; font-size:14px; font-weight:700; border-radius:20px;
@@ -393,6 +411,10 @@ footer{margin-top:26px; padding:16px 0; border-top:1px solid var(--line);
     margin:5px 0 0; text-align:right;
   }
 
+  /* 하위 탭 — 상단 탭 바로 아래 고정 */
+  .stabs{top:44px; padding:8px 0; gap:5px;}
+  .stabs button{padding:6px 14px; font-size:13.5px;}
+
   /* 표 — 좁은 화면에서는 항목별로 쌓아서 표시 */
   .tw{overflow:visible; border:0; background:none;}
   .swipe{display:none;}
@@ -476,7 +498,7 @@ footer{margin-top:26px; padding:16px 0; border-top:1px solid var(--line);
 <body>
 
 <div class="topbar"><div class="wrap">
-  <span>멀티미디어위원회 › <b>말씀함께 절기팀</b> › 운영(안)</span>
+  <span>멀티미디어위원회 › <b>말씀함께팀</b> › 운영(안)</span>
   <span>업데이트 <b>2026. 9. 1.</b> · 정리 기획분과 안상미</span>
 </div></div>
 
@@ -521,7 +543,7 @@ footer{margin-top:26px; padding:16px 0; border-top:1px solid var(--line);
     <div class="events">
       <span>앱 출시 <b>9월 말 (예정)</b></span>
       <span>금요성령집회 <b>10월 16일 (금)</b></span>
-      <span>컨퍼런스 <b>10월 17일 (토) 15:00</b></span>
+      <span>콘퍼런스 <b>10월 17일 (토) 15:00</b></span>
       <span>특별주일 <b>10월 18일 (주일)</b></span>
       <span>묵상주간 <b>10월 19일 ~ 24일</b></span>
     </div>
@@ -529,6 +551,7 @@ footer{margin-top:26px; padding:16px 0; border-top:1px solid var(--line);
   </div>
 </div></div></div>
 
+<div id="tabtop" aria-hidden="true"></div>
 <nav class="tabs"><div class="wrap">
   <button class="on" data-t="t1"><span class="n">1</span>개요</button>
   <button data-t="t2"><span class="n">2</span>조직 · 분과</button>
@@ -549,10 +572,10 @@ footer{margin-top:26px; padding:16px 0; border-top:1px solid var(--line);
     <div class="body"><div class="tl">
       <div class="ev">
         <div class="d">10/16(금) · 금요성령집회</div>
-        <div class="t">신촌감리교회 임재훈 목사 외부 강사 초청 · 말씀묵상 공동체 사례 나눔</div>
+        <div class="t">신촌감리교회 임재웅 목사 외부 강사 초청 · 말씀묵상 공동체 사례 나눔</div>
       </div>
       <div class="ev key">
-        <div class="d">10/17(토) 15:00 · 「말씀함께 컨퍼런스」</div>
+        <div class="d">10/17(토) 15:00 · 「말씀함께 콘퍼런스」</div>
         <div class="t">6층 글로리홀 · 약 1~1.5시간 · <b>앱 사용법 및 필요성 중심</b> · 전체 리더십 필참</div>
       </div>
       <div class="ev">
@@ -567,12 +590,12 @@ footer{margin-top:26px; padding:16px 0; border-top:1px solid var(--line);
   </div>
 
   <div class="card">
-    <h2>절기의 흐름</h2>
+    <h2>행사의 흐름</h2>
     <div class="body">
       <p style="margin:0 0 10px">본행사 나흘은 성격이 각각 다릅니다. 홍보와 준비를 어디에 얼마나 쓸지는 이 성격 차이를 기준으로 나눕니다.</p>
       <div class="tw" data-c="flowtbl"><table class="flowtbl stk">
         <tr><th style="width:16%">일자</th><th style="width:14%">성격</th><th style="width:34%">이 날 사람들이 하게 되는 것</th><th>필요한 것</th></tr>
-        <tr><td data-l="일자">10/16(금)</td><td data-l="성격">은혜 · 동기</td><td data-l="하는 일">외부 강사의 말씀묵상 공동체 사례를 듣는다</td><td data-l="필요한 것">신촌감리교회 임재훈 목사 섭외 · 사례 나눔 구성</td></tr>
+        <tr><td data-l="일자">10/16(금)</td><td data-l="성격">은혜 · 동기</td><td data-l="하는 일">외부 강사의 말씀묵상 공동체 사례를 듣는다</td><td data-l="필요한 것">신촌감리교회 임재웅 목사 섭외 · 사례 나눔 구성</td></tr>
         <tr><td data-l="일자">10/17(토)</td><td data-l="성격">학습 · 도구</td><td data-l="하는 일">앱을 왜 쓰는지 알고, 쓰는 법을 익힌다</td><td data-l="필요한 것">앱 시연 자료 · 필요성 설명 구성 · 6층 글로리홀 · <span class="chip need">참석 범위 확정</span></td></tr>
         <tr><td data-l="일자">10/18(주일)</td><td data-l="성격">선포 · 확산</td><td data-l="하는 일">전 세대가 같은 메시지를 듣는다</td><td data-l="필요한 것">간증자 2인 섭외 · 전 교회학교(유아~청소년) 묵상 중심 설교 및 공과 준비</td></tr>
         <tr><td data-l="일자">10/19~24</td><td data-l="성격">실행 · 지속</td><td data-l="하는 일">실제로 매일 묵상한다</td><td data-l="필요한 것"><span class="chip need">진행 방식 미정</span> <span class="chip need">명칭 미확정</span></td></tr>
@@ -586,7 +609,7 @@ footer{margin-top:26px; padding:16px 0; border-top:1px solid var(--line);
   </div>
 
   <div class="card">
-    <h2>이 절기가 끝났을 때 남아야 할 것 <span class="tag" style="background:var(--amb)">미정</span></h2>
+    <h2>이번 말씀함께주간이 끝났을 때 남아야 할 것 <span class="tag" style="background:var(--amb)">미정</span></h2>
     <div class="body">
       <div class="fill">
         <b>9/5 회의에서 확정</b>
@@ -602,14 +625,14 @@ footer{margin-top:26px; padding:16px 0; border-top:1px solid var(--line);
 <section class="panel" id="t2">
 
   <div class="stabs">
-    <button class="on" data-s="s1">조직 · 분과</button>
-    <button data-s="s2">중보기도</button>
+    <button class="on" data-s="s1">팀 구성</button>
+    <button data-s="s2">기도 일정</button>
   </div>
 
   <div class="spanel on" id="s1">
 
   <div class="card">
-    <h2>절기팀 구성</h2>
+    <h2>말씀함께팀 구성</h2>
     <div class="body">
       <div class="tw orgwrap"><table class="orgtbl">
         <tr><th class="grp">구분</th><th class="pos">직책</th><th class="nm2">성명</th><th class="rmk">비고</th></tr>
@@ -627,18 +650,18 @@ footer{margin-top:26px; padding:16px 0; border-top:1px solid var(--line);
 
         <tr><td rowspan="6" class="grp">분과</td>
             <td class="pos">기획분과장</td><td class="nm2">안상미 권사</td><td class="rmk">부총무 개념 · 전체 아이디어 총괄</td></tr>
-        <tr><td class="pos">중보기도분과장</td><td class="nm2">임영아 권사</td><td class="rmk">작년 「말씀함께주간」 절기팀 총무 경험</td></tr>
+        <tr><td class="pos">중보기도분과장</td><td class="nm2">임영아 권사</td><td class="rmk">작년 「말씀함께주간」 말씀함께팀 총무 경험</td></tr>
         <tr><td class="pos">홍보분과장</td><td class="nm2">신연형 집사</td><td class="rmk">촬영 · 콘텐츠부</td></tr>
         <tr><td class="pos">영상분과장</td><td class="nm2">남덕진 집사</td><td class="rmk">1차 회의 위촉 확정 · 전산사역국장</td></tr>
-        <tr class="off"><td class="pos">예배분과</td><td class="nm2">추후 필요시</td><td class="rmk">절기팀 내에서 협력 운영</td></tr>
-        <tr class="off"><td class="pos">데코분과</td><td class="nm2">추후 필요시</td><td class="rmk">절기팀 내에서 협력 운영 · 1층 로비 보수공사(11/14 종료 예정)</td></tr>
+        <tr class="off"><td class="pos">예배분과</td><td class="nm2">추후 필요시</td><td class="rmk">말씀함께팀 내에서 협력 운영</td></tr>
+        <tr class="off"><td class="pos">데코분과</td><td class="nm2">추후 필요시</td><td class="rmk">말씀함께팀 내에서 협력 운영 · 1층 로비 보수공사(11/14 종료 예정)</td></tr>
 
         <tr><td rowspan="2" class="grp">팀원</td>
             <td class="pos">팀원</td><td class="nm2">송태진 집사</td><td rowspan="2" class="rmk" style="vertical-align:middle">요셉2교구 초원지기 부부</td></tr>
         <tr><td class="pos">팀원</td><td class="nm2">민경연 집사</td></tr>
       </table></div>
       <div class="note">
-        ※ 예배분과 · 데코분과는 우선 절기팀 전체가 협력하여 운영하며, 추후 필요 시 별도 구성합니다.<br>
+        ※ 예배분과 · 데코분과는 우선 말씀함께팀 전체가 협력하여 운영하며, 추후 필요 시 별도 구성합니다.<br>
         ※ 연락처는 본 문서에 기재하지 않으며 별도 명단으로 관리합니다.
       </div>
     </div>
@@ -677,7 +700,7 @@ footer{margin-top:26px; padding:16px 0; border-top:1px solid var(--line);
           <ul>
             <li>광고영상 기획 및 외주 섭외</li>
             <li>촬영 · 편집 · 송출 스케줄링</li>
-            <li>컨퍼런스 · 주일예배 영상 디렉팅</li>
+            <li>콘퍼런스 · 주일예배 영상 디렉팅</li>
           </ul>
         </div>
 
@@ -771,8 +794,8 @@ footer{margin-top:26px; padding:16px 0; border-top:1px solid var(--line);
     <div class="kn-body">
       <div class="kn-ttl">9월에 준비를 마치고, 10월은 홍보에 집중합니다</div>
       <ul class="kn-list">
-        <li>이번 절기는 <b>「말씀함께 앱」 출시</b>와 함께 진행됩니다.</li>
-        <li>10/17 컨퍼런스는 <b>앱 사용법을 다루는 자리</b>이므로, 참석자가 이미 앱을 설치한 상태여야 합니다.</li>
+        <li>이번 말씀함께주간은 <b>「말씀함께 앱」 출시</b>와 함께 진행됩니다.</li>
+        <li>10/17 콘퍼런스는 <b>앱 사용법을 다루는 자리</b>이므로, 참석자가 이미 앱을 설치한 상태여야 합니다.</li>
         <li>설치가 본행사 뒤로 밀리면 <b>순서가 뒤집힙니다.</b></li>
         <li>따라서 <b>10월 초부터</b> 앱 설치를 유도하는 <b>프로모션</b>이 돌아가야 합니다.</li>
         <li>그러려면 <b>9월 안에 아이데이션과 결정을 마쳐야</b> 하며, 이 아이데이션을 <b>9/5 회의에서 먼저</b> 다루어야 합니다.</li>
@@ -784,8 +807,8 @@ footer{margin-top:26px; padding:16px 0; border-top:1px solid var(--line);
     <h2>정기 준비모임</h2>
     <div class="body">
       <div class="box" style="margin-bottom:12px">
-        <span class="lbl">운영 원칙</span> — 매주 최소 1회 오프라인 모임. 절기팀 정기모임은 시작 전 짧은 중보기도 시간을 갖는 방식으로 진행합니다.<br>
-        <span class="lbl">중보기도</span> — 중보기도팀은 분과원들과 <b>별도 시간을 정해</b> 기도로 지원합니다. 절기팀 정기모임과 분리하여 운영합니다.
+        <span class="lbl">운영 원칙</span> — 매주 최소 1회 오프라인 모임. 말씀함께팀 정기모임은 시작 전 짧은 중보기도 시간을 갖는 방식으로 진행합니다.<br>
+        <span class="lbl">중보기도</span> — 중보기도팀은 분과원들과 <b>별도 시간을 정해</b> 기도로 지원합니다. 말씀함께팀 정기모임과 분리하여 운영합니다.
       </div>
       <div class="tw" data-c="mtgtbl"><table class="mtgtbl stk">
         <tr><th style="width:20%">일자</th><th style="width:14%">시간</th><th style="width:14%">상태</th><th>비고</th></tr>
@@ -809,7 +832,7 @@ footer{margin-top:26px; padding:16px 0; border-top:1px solid var(--line);
         <tr><th style="width:16%">회차</th><th style="width:34%">안건</th><th>결과</th></tr>
         <tr>
           <td data-l="회차"><b>1차</b><br><span class="note">팀 구성</span></td>
-          <td data-l="안건">절기팀 구성 · 분과장 위촉 · 전체 일정 공유 · 캠페인 브레인스토밍</td>
+          <td data-l="안건">말씀함께팀 구성 · 분과장 위촉 · 전체 일정 공유 · 캠페인 브레인스토밍</td>
           <td data-l="결과">서기 · 영상분과장 위촉 확정 / 정기모임 일정 확정 / 데코분과 미운영 결정 / 앱·책자 정책 TF 이관 / 분과별 계획 준비 과제 부여</td>
         </tr>
         <tr>
@@ -836,9 +859,9 @@ footer{margin-top:26px; padding:16px 0; border-top:1px solid var(--line);
           <li>9/27 이후 <b>모임 장소</b> 확정 (담당자 섭외 예정)</li>
           <li>캠페인 · 홍보 아이디어 <b>담임목사님 컨펌</b></li>
           <li>회계 <b>최종 확정</b> — 최진선 권사 임시 지정, 9/5 회의</li>
-          <li>10/17 컨퍼런스 <b>"전체 리더십" 참석 범위</b> — 목장 초원지기 포함 여부 (회의록 미기재)</li>
+          <li>10/17 콘퍼런스 <b>"전체 리더십" 참석 범위</b> — 목장 초원지기 포함 여부 (회의록 미기재)</li>
           <li>10/19~24 묵상주간 <b>진행 방식</b></li>
-          <li>10/16 금요성령집회 · 10/18 특별주일 <b>구성 협의 방식</b> — 예배분과 별도 구성 없이 절기팀 협력</li>
+          <li>10/16 금요성령집회 · 10/18 특별주일 <b>구성 협의 방식</b> — 예배분과 별도 구성 없이 말씀함께팀 협력</li>
         </ul>
       </div>
     </div>
@@ -874,7 +897,7 @@ footer{margin-top:26px; padding:16px 0; border-top:1px solid var(--line);
         </div>
       </div>
       <div class="note" style="margin-top:9px">
-        ※ 출시일은 <b>앱개발 TF</b> 확정 사항으로, 절기팀은 확정된 날짜에 맞춰 일정을 조정합니다.
+        ※ 출시일은 <b>앱개발 TF</b> 확정 사항으로, 말씀함께팀은 확정된 날짜에 맞춰 일정을 조정합니다.
         회의록에는 기재되어 있지 않으며 <span class="need-t">확정 필요</span>합니다.
       </div>
     </div>
@@ -1011,7 +1034,7 @@ footer{margin-top:26px; padding:16px 0; border-top:1px solid var(--line);
       <div class="kn-ttl">아직 아이데이션 단계입니다 — 9월 안에 안을 좁혀야 합니다</div>
       <ul class="kn-list">
         <li>아래 항목은 1차 회의 <b>브레인스토밍 결과</b>일 뿐, <b>확정된 것은 하나도 없습니다.</b></li>
-        <li>이번 절기의 목표는 <b>앱 설치 유도</b>입니다. 아이디어를 고를 때 <b>설치로 이어지는가</b>를 기준으로 봅니다.</li>
+        <li>이번 말씀함께주간의 목표는 <b>앱 설치 유도</b>입니다. 아이디어를 고를 때 <b>설치로 이어지는가</b>를 기준으로 봅니다.</li>
         <li>9/5 회의에서 <b>브레인스토밍을 이어가고</b>, 담임목사님께 올릴 안을 추립니다.</li>
         <li>확정된 항목은 <b>담당 분과와 마감일을 함께</b> 적어 아래 「확정 캠페인」으로 옮깁니다.</li>
       </ul>
@@ -1073,7 +1096,7 @@ footer{margin-top:26px; padding:16px 0; border-top:1px solid var(--line);
     <h2>기도제목</h2>
     <div class="body">
       <ul class="li">
-        <li>이 절기가 행사에 머물지 않고, 온 교회가 말씀 앞에 서는 시간이 되도록</li>
+        <li>이번 말씀함께주간이 행사에 머물지 않고, 온 교회가 말씀 앞에 서는 시간이 되도록</li>
         <li>각 분과장이 자격이 아니라 부르심으로 서도록 — 1차 회의에서 다수가 "자격이 부족하다고 느꼈으나 말씀으로 훈련받는 은혜의 시간"이라는 소감을 나눔</li>
         <li>앱과 책자가 도구에 머물고 목적이 되지 않도록</li>
         <li>새로 세워진 총무 · 회계와 담당 목사님 · 전도사님들이 한 방향으로 서도록</li>
@@ -1085,35 +1108,46 @@ footer{margin-top:26px; padding:16px 0; border-top:1px solid var(--line);
 </section>
 
 <footer>
-  선한목자교회 멀티미디어위원회 · 말씀함께 절기팀 기획분과<br>
-  본 문서는 절기팀 1차 회의록에 기재된 내용과 이후 공유된 자료를 근거로 작성되었습니다. · gsmch-ww-plan
+  선한목자교회 멀티미디어위원회 · 말씀함께팀 기획분과<br>
+  본 문서는 말씀함께팀 1차 회의록에 기재된 내용과 이후 공유된 자료를 근거로 작성되었습니다. · gsmch-ww-plan
 </footer>
 
 </div>
 
 <script>
 (function(){
-  var nav=document.querySelector('nav.tabs');
+  var mark=document.getElementById('tabtop');
   var btns=document.querySelectorAll('nav.tabs button');
   var pans=document.querySelectorAll('.panel');
 
-  function navTop(){
-    // sticky 적용 전 기준 위치 계산
-    var y=0, el=nav;
-    while(el){ y+=el.offsetTop; el=el.offsetParent; }
-    return y;
-  }
   function show(id){
     btns.forEach(function(b){b.classList.toggle('on', b.dataset.t===id);});
     pans.forEach(function(p){p.classList.toggle('on', p.id===id);});
   }
+  function toTop(){
+    if(!mark) return;
+    try{
+      if(mark.scrollIntoView) mark.scrollIntoView(true);
+      else window.scrollTo(0, mark.offsetTop);
+    }catch(err){
+      var y=0, el=mark;
+      while(el){ y+=el.offsetTop||0; el=el.offsetParent; }
+      window.scrollTo(0, y);
+    }
+  }
   function go(id, scroll){
-    show(id);
-    if(scroll) window.scrollTo(0, navTop());
+    show(id);                       // 먼저 패널을 바꾼 뒤
+    if(!scroll) return;
+    toTop();                        // 바뀐 레이아웃 기준으로 이동
+    requestAnimationFrame(toTop);   // 렌더 확정 후 한 번 더
+    setTimeout(toTop, 60);          // 표·이미지 반영 후 마지막 보정
   }
   btns.forEach(function(b){
-    b.addEventListener('click',function(){
-      location.hash='v1/'+b.dataset.t;
+    b.addEventListener('click',function(e){
+      e.preventDefault();
+      try{
+        if(history && history.replaceState) history.replaceState(null,'','#v1/'+b.dataset.t);
+      }catch(err){ /* 인앱 브라우저에서 주소 변경이 막힌 경우 무시 */ }
       go(b.dataset.t, true);
     });
   });
